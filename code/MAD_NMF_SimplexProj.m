@@ -98,7 +98,7 @@ for Rep_ind = 1:Reps
     % iterations
     A = A0;
     S = S0;
-    
+
     % Store the residuals for each iteration
     tmp_resid = NaN(MaxIter, 1);
     
@@ -109,19 +109,22 @@ for Rep_ind = 1:Reps
             % Get the Sk, Ak, and Xk vectors
             Sk = S(k_ind, :);
             Ak = A(:, k_ind);
+            if norm(Ak)^2 <= 0
+                disp('Column of A is 0')
+            end
             Xk = X - A*S + Ak*Sk;
                                      
            % Update Sk, the end members
             S_sum = sum(S,1) - Sk;
             % QQ add to check whether QK is positive definite
-            hessian = norm(Ak)^2 / ((1-1/k)^2);
+            hessian = norm(Ak)^2 / ((1-1/k));
 
             if b2 >= hessian
                 disp('Matrix is not symmetric positive definite')
             end
 
             %QQ add to check whether QK is positive definite
-            Qk = 2 * norm(Ak)^2 - 2 * b2 * ((1-1/k)^2);
+            Qk = 2 * norm(Ak)^2 - 2 * b2 * ((1-1/k));
             try 
                chol(Qk);
             catch ME
@@ -130,8 +133,8 @@ for Rep_ind = 1:Reps
             
             % Sk = (Ak'*Xk + ( (b2/k)*(1-1/k)*(eye(nVar) - ones(nVar)./nVar)*S_sum' )' )...
             %     / (norm(Ak).^2*eye(nVar) + b2.*(eye(nVar) - ones(nVar)./nVar) .* (1-1/k)^2) ;
-             Sk = (Ak'*Xk - ( (b2/k)*(1-1/k)*S_sum' )' )...
-                / (norm(Ak)^2 - b2*((1-1/k)^2)) ;
+             Sk = (Ak'*Xk - ( (b2/k)*S_sum' )' )...
+                / (norm(Ak)^2 - b2*((1-1/k))) ;
             % Update Sk with the maximum function and add to S
             % QQ delete the below
             % Sk(Sk > 1) = 1;

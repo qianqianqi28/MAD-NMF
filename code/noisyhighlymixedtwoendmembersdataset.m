@@ -1,14 +1,14 @@
 clear all; close all; clc;
-cd('D:\MAD-NMF\AnalySize-master\AnalySize-master');
+cd('D:\MAD-NMF\AnalySize-master-modify\AnalySize-master');
 restoredefaultpath
-addpath(genpath('D:\MAD-NMF\AnalySize-master\AnalySize-master'))
+addpath(genpath('D:\MAD-NMF\AnalySize-master-modify\AnalySize-master'))
 rng(42); % Set seed for reproducibility
 %% Parameters
 n_specimens = 99;          % Number of specimens
 min_abundance = 0.13;  % Minimum abundance (13%)
 max_abundance = 0.87;  % Maximum abundance (87%)
 % Grain size vector
-T = readtable('D:\MAD-NMF\AnalySize-master\AnalySize-master\Example_Data\Example_Data_2.xlsx','Sheet','True_Data');
+T = readtable('D:\MAD-NMF\AnalySize-master-modify\AnalySize-master\Example_Data\Example_Data_2.xlsx','Sheet','True_Data');
 grain_size = T{:,1};
 collabel =  string(grain_size);
 %% Define Lognormal Distributions for Sources

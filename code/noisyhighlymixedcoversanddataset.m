@@ -1,7 +1,7 @@
 clear; close all; clc;
-cd('D:\MAD-NMF\AnalySize-master\AnalySize-master');
+cd('D:\MAD-NMF\AnalySize-master-modify\AnalySize-master');
 restoredefaultpath
-addpath(genpath('D:\MAD-NMF\AnalySize-master\AnalySize-master'))
+addpath(genpath('D:\MAD-NMF\AnalySize-master-modify\AnalySize-master'))
 rng(42);
 colnames = [0.24 0.29 0.35 0.41 0.49 0.58 0.69 0.82 0.98 1.2 1.4 1.6 2 2.3 2.8 ...
      3.3 3.9 4.7 5.5 6.6 7.8 9.3 11.1 13.1 15.6 18.6 22.1 26.3 31.3 37.2 ...
@@ -37,7 +37,7 @@ noisy_coversand_samples = noisy_samples ./ sum(noisy_samples,2);
 
 fprintf('Coversand dataset (200 samples, noise‑free):\n');
 fprintf('mean abundances: %.3f %.3f %.3f %.3f\n', mean(abund_highmix));
-fprintf('abundance ranges: [%.1f, %.1f]%%\n', ...
+fprintf('abundance ranges: [%.2f, %.2f]%%\n', ...
         min(abund_highmix(:)), max(abund_highmix(:)));
 fprintf('sample sum check: sum = %f (should be 1)\n', mean(sum(noisy_coversand_samples,2)));
 
@@ -52,7 +52,7 @@ Reps = 1;
 r = 4; 
 
 %% min dis
-lambdamin = 3.3;
+lambdamin = 2.6;
 Regs = [100, lambdamin];
 disp('Running AnalySize:');
 [S_min, A_min, ~] = HALS_NMF(X, r, MaxIter, Reps, Regs);
@@ -64,7 +64,7 @@ A_min = A_min';
 
 %% max Dis
 % lambdamax = 2.5;
-lambdamax = 3.3;
+lambdamax = 2.6;
 Regs = [100, lambdamax];
 disp('Running max-dis NMF:');
 [S_max, A_max, ~] = MAD_NMF_SimplexProj(X, r, MaxIter, Reps, Regs);
